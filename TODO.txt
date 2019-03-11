@@ -1,0 +1,14 @@
+-Ajout des photos
+	*express-fileupload (seems easy)
+	*Add photo from /profile
+	*Delete photos
+
+-Ajout du descriptif (DONE)
+
+
+-Ajout des passions (bdd ) 
+	*Liaison avec l'utilisateur
+
+-Systeme de swipe like/dislike
+-Systeme de match
+-Affichage des matchs

@@ -1,0 +1,27 @@
+{
+  "name": "dm",
+  "version": "1.0.0",
+  "description": "devoir maison",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "Rafik Benmebarek",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.4",
+    "body-parser": "^1.18.3",
+    "bootstrap": "^4.3.0",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-busboy": "^7.0.1",
+    "express-fileupload": "^1.1.2-alpha.1",
+    "express-session": "^1.15.6",
+    "moment": "^2.24.0",
+    "multer": "^1.4.1",
+    "mysql": "^2.16.0",
+    "nodemon": "^1.18.10"
+  },
+  "devDependencies": {}
+}

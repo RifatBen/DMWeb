@@ -1,0 +1,44 @@
+ 	<% include ../layouts/header %>
+			<div class="col-sm-8">
+				<!--Sign up form -->
+
+				<h1>Créez votre compte</h1>
+				 <br>
+					<form id="form" method="POST" action="/profile/<%= user.id %>">
+            <div class="form-group">
+              <label for="sexe">Sexe :</label>
+              <select class="form-control" name="sexe">
+                <option value="H">Homme</option>
+                <option value="F" <% if (user.sexe=='F')%> >Femme</option>
+              </select>
+            </div>
+						<div class="form-group">
+							<label for="nom">Nom : </label>
+							<input class="form-control" type="text" name="nom" id="nom" value="<%= user.nom %>"/>
+						</div>
+
+
+						<div class="form-group">
+							<label for="prenom">Prénom : </label>
+							<input class="form-control" type="text" name="prenom" value="<%= user.prenom %>"/>
+						</div>
+
+
+						<div class="form-group">
+							<label for="nom">Date de naissance : </label>
+							<input class="form-control" type="date" name="datenaissance" value="<%= user.datenaissance %>" />
+						</div>
+
+						<div class="form-group">
+							<label for="email">Adresse électronique :</label>
+							<input class="form-control" type="email" name="email" value="<%= user.email %>"/>
+						</div>
+
+						<div class="form-group">
+							<button type="submit" name="submit" class="btn btn-primary">Modifier</button>
+						</div>
+					</form>
+
+			</div>
+		</div>
+<% include ../layouts/footer %>

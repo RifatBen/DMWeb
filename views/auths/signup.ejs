@@ -1,0 +1,79 @@
+<% include ../layouts/header %>
+<div class="col-sm-12">
+	<!--Sign up form -->
+
+	<h1>Créez votre compte</h1>
+	<br>
+	<form id="form" method="POST" action="/signup">
+
+		<div class="card bg-light mb-3">
+			<div class="card-header"><h4>
+				Informations personnelles
+			</h4>
+		</div>
+		<div class="card-body">
+		<div class="form-group">
+			<label for="sexe">Sexe :</label>
+			<select class="form-control" name="sexe">
+				<option value="H">Homme</option>
+				<option value="F">Femme</option>
+			</select>
+		</div>
+
+		<div class="form-group">
+			<label for="nom">Nom : </label>
+			<input class="form-control" type="text" name="nom" id="nom" required/>
+		</div>
+
+
+		<div class="form-group">
+			<label for="prenom">Prénom : </label>
+			<input class="form-control" type="text" name="prenom" required/>
+		</div>
+
+
+		<div class="form-group">
+			<label for="nom">Date de naissance : </label>
+			<input class="form-control" type="date" name="datenaissance" min="1909-02-01" required/>
+		</div>
+
+		<div class="form-group">
+			<label for="email">Adresse électronique :</label>
+			<input class="form-control" type="email" name="email" required/>
+		</div>
+
+		<div class="form-group">
+			<label for="password">Mot de passe : </label>
+			<input class="form-control" type="password" name="password" id="password" required/>
+		</div>
+
+
+		<div class="form-group">
+			<label for="password_confirm">Confirmation de mot de passe : </label>
+			<input class="form-control" type="password" name="password_confirm" required/>
+		</div>
+		</div>
+
+
+
+		<div class="card-header">
+			<h4>Un peu plus sur vous</h4>
+		</div>
+		<div class="card-body">
+		<div class="form-group">
+			<label for="description">Description :</label>
+			<textarea class="form-control" name="description" id="description" cols="30" rows="3" placeholder="Décrivez vous en quelques mots ici.."></textarea>
+		</div>
+		<div class="form-group">
+			<label for="photos">Quelques photos de vous</label>
+			<input class="form-control-file" type="file" name="photos" id="photo" accept="image/png, image/jpeg" multiple="multiple">
+		</div>
+		</div>
+		<br>
+		<div class="card-body">
+		<button class="btn btn-primary" type="submit">Valider</button>
+		<button class="btn btn-danger" type="reset">Réinitialiser</button>
+		</div>
+	</form>
+</div>
+<% include ../layouts/footer %>
