@@ -3,6 +3,7 @@ let bcrypt = require('bcrypt')
 let moment = require('moment')
 var table = 'Users'
 let Auth = require('../middlewares/Auth')
+let Photos = require('./Photo')
 class User {
 
   constructor (datas){

@@ -1,10 +1,6 @@
 -Ajout des photos
-	*express-fileupload (seems easy)
-	*Add photo from /profile
+	*Add photo from /profile(easy)
 	*Delete photos
-
--Ajout du descriptif (DONE)
-
 
 -Ajout des passions (bdd ) 
 	*Liaison avec l'utilisateur

@@ -59,9 +59,18 @@ app.get('/signup', (request,response) => {
 })
 
 app.post('/signup', (request,response)=> {
-  console.log(request.body)
   User.create(request.body, function(user){
     if(user){
+      
+      let Photos = require('./models/Photo')
+      for(imageFile of request.files.photos){
+        Photos.create(user.id,imageFile.name)
+        var fileName = user.nom +'_' + user.prenom +'_'+ user.id + '_'+ imageFile.name
+        imageFile.mv('uploads/'+ fileName, function(err){
+          if(err) throw err
+        })
+      }
+
       Auth.login(user ,request, response, function(){
         request.flash('success','Connexion établie! :)')
         request.flash('info','Et si vous nous donniez une petite description de vous?')
