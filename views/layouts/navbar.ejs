@@ -21,13 +21,19 @@
       <% } %>
           <% if(locals.user) { %>
       <ul class="navbar-nav ">
-        <li class="nav-item"><a class="nav-link" href="/profile" style="color:white"><%= user.nom + " " + user.prenom %></a></li>
-        <li class="nav-item">
-        <form id="logout" action="/logout" method="POST">
-         <a style="color:white" class="nav-link" href="javascript:{}"  onclick="document.getElementById('logout').submit(); return false;">Logout</a>
+        <div class="dropdown">
+  <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <%=user.nom + " " + user.prenom %>
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="/profile">Modifier votre profil</a>
+    <a class="dropdown-item" href="/criteres">Modifier vos critères</a>
+    <form id="logout" action="/logout" method="POST">
+    <a class="dropdown-item" href="javascript:{}" onclick="document.getElementById('logout').submit(); return false;"> Logout </a>
        </form>
-        </li>
-      </div>
+    </a>
       <% } %>
     </div>
+
+    
   </nav>

@@ -1,9 +1,9 @@
 -Ajout des photos
-	*Add photo from /profile(easy)
-	*Delete photos
+	*Pb avec l'ajout d'une UNIQUE photo (photos not iterable easy)
 
 -Ajout des passions (bdd ) 
-	*Liaison avec l'utilisateur
+	*Liaison avec l'utilisateur(DONE)
+	*Déconnection soudaide après changement de critere?
 
 -Systeme de swipe like/dislike
 -Systeme de match

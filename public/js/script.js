@@ -1,4 +1,5 @@
 $(document).ready(function () {
+
   $("#form").validate({
     rules : {
       nom : 'required',
@@ -19,11 +20,14 @@ $(document).ready(function () {
       description : {
         required : true,
         maxlength:255
-      }
+      },
       photos : {
-        required : true
-        accept: "image/jpeg, image/pjpeg, image/png",
-
+        accept: "image/jpeg, image/pjpeg, image/png"
+      },
+      minage : {
+        required : true,
+        number :true,
+        range : [18,100]
       }
 
     },

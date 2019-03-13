@@ -1,3 +1,5 @@
+let Critere = require('../models/Critere')
+
 class Auth{
 
   static login(user,request,response,next){
@@ -6,8 +8,14 @@ class Auth{
       response.redirect('/')
     }
     else{
+
       request.session.user=user
+      Critere.find(user.id,function(critere){
+      request.session.user.critere = critere
+      console.log()
       next()
+      })
+
     }
   }
 

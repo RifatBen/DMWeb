@@ -15,6 +15,21 @@ class Photos{
 				}
 			})
 	}
+
+	static delete(id,cb){
+		connection.query('DELETE FROM ' + table + ' WHERE id = ?', [id], (err) => {
+			if(err) throw err
+
+			cb()
+		})
+	}
+
+	static findAll(user_id,cb){
+		connection.query('SELECT * FROM ' + table +' WHERE user_id= ? ', user_id , function(err,result){
+			if(err) throw err
+			cb(result)
+		})
+	}
 }
 
 module.exports = Photos

@@ -1,44 +1,113 @@
  	<% include ../layouts/header %>
-			<div class="col-sm-8">
-				<!--Sign up form -->
+ 	<div class="col-sm-8">
 
-				<h1>Créez votre compte</h1>
-				 <br>
-					<form id="form" method="POST" action="/profile/<%= user.id %>">
-            <div class="form-group">
-              <label for="sexe">Sexe :</label>
-              <select class="form-control" name="sexe">
-                <option value="H">Homme</option>
-                <option value="F" <% if (user.sexe=='F')%> >Femme</option>
-              </select>
-            </div>
-						<div class="form-group">
-							<label for="nom">Nom : </label>
-							<input class="form-control" type="text" name="nom" id="nom" value="<%= user.nom %>"/>
-						</div>
+ 		<form id="form" method="POST" action="/profile/<%= user.id %>" encType="multipart/form-data">
+
+ 			<div class="card bg-light mb-3">
+ 				<div class="card-header"><h4>
+ 					Informations personnelles
+ 				</h4>
+ 			</div>
+ 			<div class="card-body">
+ 				<div class="form-group">
+ 					<label for="sexe">Sexe :</label>
+ 					<select class="form-control" name="sexe">
+ 						<option value="H">Homme</option>
+ 						<option value="F">Femme</option>
+ 					</select>
+ 				</div>
+
+ 				<div class="form-group">
+ 					<label for="nom">Nom : </label>
+ 					<input class="form-control" type="text" name="nom" id="nom" value="<%= user.nom %>"/>
+ 				</div>
 
 
-						<div class="form-group">
-							<label for="prenom">Prénom : </label>
-							<input class="form-control" type="text" name="prenom" value="<%= user.prenom %>"/>
-						</div>
+ 				<div class="form-group">
+ 					<label for="prenom">Prénom : </label>
+ 					<input class="form-control" type="text" name="prenom" value="<%= user.prenom %>"/>
+ 				</div>
 
 
-						<div class="form-group">
-							<label for="nom">Date de naissance : </label>
-							<input class="form-control" type="date" name="datenaissance" value="<%= user.datenaissance %>" />
-						</div>
+ 				<div class="form-group">
+ 					<label for="nom">Date de naissance : </label>
+ 					<input class="form-control" type="date" name="datenaissance" min="1909-02-01" value="<%= user.datenaissance %>"/>
 
-						<div class="form-group">
-							<label for="email">Adresse électronique :</label>
-							<input class="form-control" type="email" name="email" value="<%= user.email %>"/>
-						</div>
+ 				</div>
 
-						<div class="form-group">
-							<button type="submit" name="submit" class="btn btn-primary">Modifier</button>
-						</div>
-					</form>
+ 				<div class="form-group">
+ 					<label for="email">Adresse électronique :</label>
+ 					<input class="form-control" type="email" name="email" value="<%= user.email %>"/>
+ 				</div>
+ 			</div>
 
-			</div>
-		</div>
-<% include ../layouts/footer %>
+
+
+ 			<div class="card-header">
+ 				<h4>Un peu plus sur vous</h4>
+ 			</div>
+ 			<div class="card-body">
+ 				<div class="form-group">
+ 					<label for="description">Description :</label>
+ 					<textarea class="form-control" name="description" id="description" cols="30" rows="3" placeholder="Décrivez vous en quelques mots ici.."><%=user.description %></textarea>
+ 				</div>
+ 				<div class="form-group">
+ 					<label for="photos">Quelques photos de vous</label>
+ 					<input class="form-control-file" type="file" name="photos" id="photos" accept="image/png, image/jpeg" multiple="multiple">
+ 				</div>	
+ 			</div>
+ 			<br>
+ 			<div class="card-body">
+ 				<button class="btn btn-primary" type="submit">Modifier</button>
+ 			</div>
+ 		</form>
+ 		<div class="card-header">
+ 			<h4>Vos photos</h4>
+ 		</div>
+ 		<div class="card-body">
+ 			<% if(locals.photos) {%>
+
+ 			<div id="carouselPhotos" class="carousel slide" data-ride="carousel">
+ 				<div class="carousel-inner">
+ 					<% for(photo of photos) { 
+ 					if(photo == photos[0]){%>
+ 					<div class="carousel-item active">
+ 						<form method="POST" action="/photo/delete/<%=photo.id%>">
+ 							<div class="text-center">
+ 								<input type="submit" name="submit" class="btn btn-danger" value="Supprimer">
+ 							</div>
+ 							<img src="/assets/img/uploads/<%= photo.name %>" class="d-block w-100" alt="...">
+ 						</form>
+ 					</div>
+ 					<%}
+
+ 					else{%>
+ 					<div class="carousel-item">
+ 						<form method="POST" action="/photo/delete/<%=photo.id%>">
+ 							<div class="text-center">
+ 								<input type="submit" name="submit" class="btn btn-danger"  value="Supprimer">
+ 							</div>
+ 							<img src="/assets/img/uploads/<%= photo.name %>" class="d-block w-100" alt="...">
+ 						</form>
+ 					</div>
+
+ 					<%}
+ 				}%>
+ 			</div>
+ 			<a class="carousel-control-prev" href="#carouselPhotos" role="button" data-slide="prev">
+ 				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+ 				<span class="sr-only">Previous</span>
+ 			</a>
+ 			<a class="carousel-control-next" href="#carouselPhotos" role="button" data-slide="next">
+ 				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+ 				<span class="sr-only">Next</span>
+ 			</a>
+ 		</div>
+ 		<% } 
+			else { %>
+ 			<div class="alert alert-info"> Vous n'avez pas fourni de photo :(</div>
+ 			<% } %>
+ 	</div>
+
+ </div>
+ <% include ../layouts/footer %>

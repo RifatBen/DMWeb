@@ -31,6 +31,8 @@ class User {
           user.datenaissance = moment(user.datenaissance).format('YYYY-MM-DD')
           result.user.password = undefined
           result.user.password_confirm = undefined
+          
+          request.session.user = result.user
           cb(result.user)
         }
       })
@@ -40,18 +42,19 @@ class User {
   static update(id,request,cb){
     var user=request.body
     user.id=id
-    connection.query('UPDATE ' + table +' SET nom = ?, prenom = ?, email = ?, datenaissance = ?, sexe = ? WHERE id= ?',[
+    connection.query('UPDATE ' + table +' SET nom = ?, prenom = ?, email = ?, datenaissance = ?, sexe = ?, description = ? WHERE id= ?',[
         user.nom,
         user.prenom,
         user.email,
         user.datenaissance,
         user.sexe,
+        user.description,
         user.id
         ],
         (error,result) => {
           if(error) throw error
           request.session.user=user
-          cb(result)
+          cb(user,result)
         })
   }
 
@@ -65,8 +68,6 @@ class User {
       user.datenaissance = moment(user.datenaissance).format('YYYY-MM-DD')
       bcrypt.compare(request.body.password, result[0].password, function(err,res){
         if(res===true){
-          request.session.user = user
-          console.log(request.session.user)
           cb(user)
         }
         else

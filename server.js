@@ -3,14 +3,13 @@ let bodyParser = require('body-parser')
 let session = require('express-session')
 let fileUpload = require('express-fileupload')
 let app = express()
-//var apiRouter = require('./apiRouter').router
+//let apiRouter = require('./apiRouter').router
 
 
 
 // View engine
 app.set('view engine', 'ejs')
 
-//app.use('/',apiRouter)
 //Middleware
 
 // **static files **
@@ -40,16 +39,28 @@ app.use(function(request,response,next){
 })
 
 
-let User= require('./models/User')
+// Declaration des MODELS
+let User = require('./models/User')
 let Auth = require('./middlewares/Auth')
+let Critere = require('./models/Critere')
+
 
 // ** FLASH **
 app.use(require('./middlewares/flash'))
+
+
+
+// Router
+
 
 //Routing
 app.get('/', (request,response) => {
   response.render('index')
 })
+
+
+//app.use('/',apiRouter)
+
 
 app.get('/signup', (request,response) => {
   if(request.session.user===undefined)
@@ -61,15 +72,20 @@ app.get('/signup', (request,response) => {
 app.post('/signup', (request,response)=> {
   User.create(request.body, function(user){
     if(user){
-      
+
       let Photos = require('./models/Photo')
       for(imageFile of request.files.photos){
-        Photos.create(user.id,imageFile.name)
         var fileName = user.nom +'_' + user.prenom +'_'+ user.id + '_'+ imageFile.name
-        imageFile.mv('uploads/'+ fileName, function(err){
+        Photos.create(user.id,fileName)
+        imageFile.mv('public/img/uploads/'+ fileName, function(err){
           if(err) throw err
         })
       }
+
+      Critere.create(user.id, function(critere){
+        request.session.user.critere = critere
+      })
+
 
       Auth.login(user ,request, response, function(){
         request.flash('success','Connexion établie! :)')
@@ -86,7 +102,7 @@ app.post('/signup', (request,response)=> {
 
 app.get('/getstarted',(request,response)=>{
   if(request.session.user)
-    response.render('user/profile')
+    response.redirect('/profile')
   else
     response.redirect('/')
 })
@@ -122,16 +138,30 @@ app.post('/logout',(request,response)=> {
 })
 
 app.get('/profile',(request,response) => {
-  if(request.session.user)
-    response.render('user/profile')
+  if(request.session.user){
+    let Photos = require('./models/Photo')
+    photos = Photos.findAll(request.session.user.id,function(result){
+    response.render('user/profile', {"photos" : result})
+    })
+  }
   else {
     request.flash('errors','Vous devez vous identifier pour avoir accès à cette page')
     response.redirect('/login')
   }
 })
 
-app.post('/profile/:id', (request,response) => {  User.update(request.params.id,request,function(result){
+app.post('/profile/:id', (request,response) => {  User.update(request.params.id,request,function(user,result){
   if(result){
+      let Photos = require('./models/Photo')
+      if(request.files.photos){
+        for(imageFile of request.files.photos){
+          var fileName = user.nom +'_' + user.prenom +'_'+ user.id + '_'+ imageFile.name
+          Photos.create(user.id,fileName)
+          imageFile.mv('public/img/uploads/'+ fileName, function(err){
+            if(err) throw err
+          })
+        }
+      }
     request.flash('success','Informations modifiées avec succès!')
     response.redirect('/profile') 
   }
@@ -142,26 +172,27 @@ app.post('/profile/:id', (request,response) => {  User.update(request.params.id,
 })
 })
 
-
-app.get('/testfile',(request,response) => {
-  response.render('test/testfile')
+app.post('/photo/delete/:id',(request,response)=>{
+  let Photos = require('./models/Photo')
+  Photos.delete(request.params.id, function(){
+    request.flash('success','Photo retirée avec succès')
+    response.redirect('/profile')
+  })
 })
 
-app.post('/testfile',(request,response)=> {
-  for(imageFile of request.files.kenzy){
-    var imageFileName = imageFile.name
-
-    imageFile.mv("uploads/" + imageFileName, function (err) {
-      
-                 if (err) {
-                return response.status(500).send(err);
-            }
-            request.flash('success','Merci!')
-    });
+app.get ('/criteres', (request,response) => {
+  if(request.session.user===undefined){
+    request.flash('error','Vous devez être connecté pour accéder à cette page!')
+    response.render('auths/login')
   }
-            request.flash('success','Meerci!')
-            response.redirect('/')
+  else
+    response.render('user/criteres')
 })
 
+app.post('/criteres/:id',(request,response)=>{
+  Critere.update(request.params.id,request.body)
+    request.flash('success','Modifications apportées avec succès!')
+    response.redirect('/criteres')
+})
 
 app.listen(8080)
