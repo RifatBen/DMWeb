@@ -4,15 +4,20 @@ var table = 'Photos'
 
 class Photos{
 
-	static create(user_id, fileName,cb){
+	static create(user_id, fileName){
 		connection.query('INSERT INTO '+ table +' SET user_id = ? , name = ?', [user_id,fileName],
 			(err,result) => {
 				if(err) 
-					throw err
-				
-				else{
-					return 1
-				}
+					return 0
+			})
+	}
+
+	static update(user_id, fileName){
+		connection.query('UPDATE  '+ table +' SET name = ? WHERE user_id = ? ', [fileName,user_id],
+			(err,result) => {
+				if(err) 
+					console.log(err)
+					return 0
 			})
 	}
 
@@ -23,11 +28,11 @@ class Photos{
 			cb()
 		})
 	}
-
+	
 	static findAll(user_id,cb){
 		connection.query('SELECT * FROM ' + table +' WHERE user_id= ? ', user_id , function(err,result){
 			if(err) throw err
-			cb(result)
+			cb(result[0])
 		})
 	}
 }

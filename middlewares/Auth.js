@@ -12,7 +12,6 @@ class Auth{
       request.session.user=user
       Critere.find(user.id,function(critere){
       request.session.user.critere = critere
-      console.log()
       next()
       })
 

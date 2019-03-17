@@ -53,7 +53,7 @@
  				</div>
  				<div class="form-group">
  					<label for="photos">Quelques photos de vous</label>
- 					<input class="form-control-file" type="file" name="photos" id="photos" accept="image/png, image/jpeg" multiple="multiple">
+ 					<input class="form-control-file" type="file" name="photos1" id="photos" accept="image/png, image/jpeg" multiple="multiple">
  				</div>	
  			</div>
  			<br>
@@ -65,34 +65,15 @@
  			<h4>Vos photos</h4>
  		</div>
  		<div class="card-body">
- 			<% if(locals.photos) {%>
 
  			<div id="carouselPhotos" class="carousel slide" data-ride="carousel">
- 				<div class="carousel-inner">
- 					<% for(photo of photos) { 
- 					if(photo == photos[0]){%>
+ 				<div class="carousel-inner"> 
  					<div class="carousel-item active">
- 						<form method="POST" action="/photo/delete/<%=photo.id%>">
- 							<div class="text-center">
- 								<input type="submit" name="submit" class="btn btn-danger" value="Supprimer">
- 							</div>
- 							<img src="/assets/img/uploads/<%= photo.name %>" class="d-block w-100" alt="...">
- 						</form>
- 					</div>
- 					<%}
 
- 					else{%>
- 					<div class="carousel-item">
- 						<form method="POST" action="/photo/delete/<%=photo.id%>">
- 							<div class="text-center">
- 								<input type="submit" name="submit" class="btn btn-danger"  value="Supprimer">
- 							</div>
  							<img src="/assets/img/uploads/<%= photo.name %>" class="d-block w-100" alt="...">
- 						</form>
+
  					</div>
 
- 					<%}
- 				}%>
  			</div>
  			<a class="carousel-control-prev" href="#carouselPhotos" role="button" data-slide="prev">
  				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -103,10 +84,6 @@
  				<span class="sr-only">Next</span>
  			</a>
  		</div>
- 		<% } 
-			else { %>
- 			<div class="alert alert-info"> Vous n'avez pas fourni de photo :(</div>
- 			<% } %>
  	</div>
 
  </div>

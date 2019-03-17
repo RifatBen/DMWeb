@@ -1,5 +1,75 @@
 <% include layouts/header %>
+<div class="col-sm-10">
+	
+	<%
+	if(user){ 
+	if(user.critere.minage === null || user.critere.minage === null || user.critere.sexe=== null  ){  %>
+	<div class="alert alert-info">Vous n'avez pas encore défini vos <u><a href="/criteres">critères de recherches</a></u></div>
+	<% } %>
 
-  <h1>Here is the main page of this website ! </h1>
+	<h2>A la recherche d'un match!</h2>
+	<%if (persons.length == 0){%>
+		<div class="alert alert-info">Il n'y à personne dans la liste pour l'instant, réessayez plus tard!</div>
+		<% }
+		else {%>
+	<div class="match">
 
+		<div class="card" style="width: 100%;">
+		<% for (person of persons) { %>
+					<div id="persons">
+			<div class="card-header"> <h3> <%= person.nom %> <%= person.prenom %></h3></div>
+			<div class="card-body">
+	
+
+					<ul class="list-group list-group-flush">
+						<li class="list-group-item" style="font-size:">Âge : <%= person.age %></li>
+						<li class="list-group-item" style="font-size:">Description : <%= person.description %> </li>
+						<li class="list-group-item">
+							<div class="card-body">
+
+								<div id="carouselPhotos" class="carousel slide" data-ride="carousel">
+									<div class="carousel-inner">
+										<div class="carousel-item active">
+											<img src="/assets/img/uploads/<%= person.photo %>" width="600px" height="600px" class="d-block w-100" alt="...">
+										</div>
+
+
+								</div>
+							</div>
+						</div>
+					</li>
+
+				</ul>
+		
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-2">
+
+					</div>
+					<div class="col-sm-5">
+						<button class="btn btn-danger" id="dislike">DISLIKE ! >:(</button> 					
+					</div>		
+
+
+					<div class="col-sm-5">
+
+						<button class="btn btn-primary" id="like">LIKE ! :D</button> 					
+					</div>		
+				</div>
+			</div>
+
+		</div>
+			</div>
+	<% } %>
+		</div>
+</div>
+<% } %>
+<!-- END FOR LOOP-->
+
+<% } 
+
+else{%>
+	azeaze
+	<%}%>
 <% include layouts/footer %>
+</div>

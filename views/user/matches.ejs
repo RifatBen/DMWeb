@@ -1,0 +1,19 @@
+<% include ../layouts/header %>
+	<div class="col-sm-8">
+		<% if(matches.length == 0) {%>
+			<div class="alert alert-info">Vous n'avez encore matcher avec personne pour l'instant! :(</div>
+			<%}%>
+		<div class="card">
+		<% for (match of matches) {%>
+			<div class="card-header">
+				<a href="/profile/<%= match.id%>"><h4><%=match.nom%> <%= match.prenom %></h4></a>
+			</div>
+			<div class="card-body">
+				<p><%= match.description%></p>
+			</div>
+		<% } %>
+		</div>
+	</div>
+
+
+<% include ../layouts/footer %>

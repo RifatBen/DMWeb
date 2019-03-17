@@ -16,15 +16,15 @@ class Critere{
 	}
 	static update(id,request,cb){
 		connection.query('UPDATE ' + table + ' SET minage = ?, maxage = ?, sexe = ? WHERE user_id= ?', 
-			[request.minage,
-			request.maxage,
-			request.sexe,
+			[request.body.minage,
+			request.body.maxage,
+			request.body.sexe,
 			id],
 			function(err,result){
 				if(err) throw err
-
 				result.critere = request.body
 				result.critere.id = id
+				result.critere.user_id = request.session.user.id
 
 				cb(result.critere)
 			})
